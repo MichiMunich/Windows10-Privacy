@@ -27,4 +27,4 @@ Alternatively execute the batch File "Windows10_Privacy.cmd" by doubleclick<br>
 
 # Usage Windows10_Cleanup.ps1
 powershell.exe -ExecutionPolicy Bypass "& '.\WindowsCleanup.ps1'"<br>
-Alternatively execute the batch File "WindowsCleanup.cmd" by doubleclick<br>
+Alternatively execute the batch File "Windows10_Cleanup.cmd" by doubleclick<br>
