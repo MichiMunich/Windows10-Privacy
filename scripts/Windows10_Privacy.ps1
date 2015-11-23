@@ -92,7 +92,7 @@ if ($enable -eq "True")
 	}
 
 	#----------------------------------------------------------------------------------
-	# diable telemetry (also possible with GPO)
+	# disable telemetry (also possible with GPO)
 	$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection"
 	Set-ItemProperty -path $path -name AllowTelemetry -value "1"
 		
