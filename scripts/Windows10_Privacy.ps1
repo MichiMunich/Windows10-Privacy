@@ -1,7 +1,7 @@
 # Windows 10 privacy settings
 # Michi Dönselmann
-# http://blog.doenselmann.com
-# 27.08.2015
+# https://blog.doenselmann.com
+# 01.11.2016
 
 # Execution examples:
 # Enable privacy protection: powershell.exe -ExecutionPolicy Bypass "& '.\Windows10_Privacy.ps1 ' -enable:$true"
@@ -87,7 +87,7 @@ if ($enable -eq "True")
 		# errorhandling
 		if ($error.Count -gt 0)
 		{
-			errorhandling -code 3;
+			errorhandling -code 1;
 		}	
 	}
 
@@ -106,9 +106,27 @@ if ($enable -eq "True")
 	# errorhandling
 	if ($error.Count -gt 0)
 	{
-		errorhandling -code 4;
+		errorhandling -code 2;
 	}
 
+	#----------------------------------------------------------------------------------
+	# disable update delivery optimization (also possible with GPO)
+	$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config"
+	Set-ItemProperty -path $path -name DODownloadMode -value "0"
+		
+		# only needed on x64 systems
+		if ($arch -eq "x64")
+		{
+			$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config"
+			Set-ItemProperty -path $path -name DODownloadMode -value "0"
+		}
+		
+	# errorhandling
+	if ($error.Count -gt 0)
+	{
+		errorhandling -code 3;
+	}
+		
 	#----------------------------------------------------------------------------------
 	# disable sheduled tasks
 	foreach($a in $tasks)
@@ -119,7 +137,7 @@ if ($enable -eq "True")
 		# errorhandling
 		if ($error.Count -gt 0)
 		{
-			errorhandling -code 5;
+			errorhandling -code 4;
 		}
 	}
 
@@ -142,7 +160,7 @@ else
 		# errorhandling
 		if ($error.Count -gt 0)
 		{
-			errorhandling -code 3;
+			errorhandling -code 5;
 		}	
 	}
 
@@ -161,7 +179,25 @@ else
 	# errorhandling
 	if ($error.Count -gt 0)
 	{
-		errorhandling -code 4;
+		errorhandling -code 6;
+	}
+	
+	#----------------------------------------------------------------------------------
+	# enable update delivery optimization (also possible with GPO)
+	$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config"
+	Set-ItemProperty -path $path -name DODownloadMode -value "1"
+		
+		# only needed on x64 systems
+		if ($arch -eq "x64")
+		{
+			$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config"
+			Set-ItemProperty -path $path -name DODownloadMode -value "1"
+		}
+		
+	# errorhandling
+	if ($error.Count -gt 0)
+	{
+		errorhandling -code 7;
 	}
 
 	#----------------------------------------------------------------------------------
@@ -174,7 +210,7 @@ else
 		# errorhandling
 		if ($error.Count -gt 0)
 		{
-			errorhandling -code 5;
+			errorhandling -code 8;
 		}
 	}
 }
