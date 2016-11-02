@@ -1,7 +1,7 @@
 # Windows 10 privacy settings
 # Michi Dönselmann
 # https://blog.doenselmann.com
-# 01.11.2016
+# 02.11.2016
 
 # Execution examples:
 # Enable privacy protection: powershell.exe -ExecutionPolicy Bypass "& '.\Windows10_Privacy.ps1 ' -enable:$true"
@@ -47,7 +47,7 @@ function errorhandling($message = $error[0].Exception.Message, $Code)
 }
 
 #----------------------------------------------------------------------------------
-# get system architecture
+# get system architecture if it's needed for further actions
 $arch = (Get-Process -Id $PID).StartInfo.EnvironmentVariables["PROCESSOR_ARCHITECTURE"];
 if ($arch -eq "AMD64")
 {
@@ -96,13 +96,6 @@ if ($enable -eq "True")
 	$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection"
 	Set-ItemProperty -path $path -name AllowTelemetry -value "1"
 		
-		# only needed on x64 systems
-		if ($arch -eq "x64")
-		{
-			$path = "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection"
-			Set-ItemProperty -path $path -name AllowTelemetry -value "1"
-		}
-		
 	# errorhandling
 	if ($error.Count -gt 0)
 	{
@@ -113,13 +106,6 @@ if ($enable -eq "True")
 	# disable update delivery optimization (also possible with GPO)
 	$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config"
 	Set-ItemProperty -path $path -name DODownloadMode -value "0"
-		
-		# only needed on x64 systems
-		if ($arch -eq "x64")
-		{
-			$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config"
-			Set-ItemProperty -path $path -name DODownloadMode -value "0"
-		}
 		
 	# errorhandling
 	if ($error.Count -gt 0)
@@ -168,14 +154,7 @@ else
 	# enable telemetry (also possible with GPO)
 	$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection"
 	Set-ItemProperty -path $path -name AllowTelemetry -value "2"
-		
-		# only needed on x64 systems
-		if ($arch -eq "x64")
-		{
-			$path = "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection"
-			Set-ItemProperty -path $path -name AllowTelemetry -value "2"
-		}
-		
+			
 	# errorhandling
 	if ($error.Count -gt 0)
 	{
@@ -186,13 +165,6 @@ else
 	# enable update delivery optimization (also possible with GPO)
 	$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config"
 	Set-ItemProperty -path $path -name DODownloadMode -value "1"
-		
-		# only needed on x64 systems
-		if ($arch -eq "x64")
-		{
-			$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config"
-			Set-ItemProperty -path $path -name DODownloadMode -value "1"
-		}
 		
 	# errorhandling
 	if ($error.Count -gt 0)
