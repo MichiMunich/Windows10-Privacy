@@ -7,7 +7,7 @@ PowerShell scripts for Windows 10:<br>
 <li>Disable various scheduled tasks</li>
 <li>Script checks the required execution level</li>
 <li>Complete rollback is possible</li>
-<li>More Information: <a href="http://blog.doenselmann.com/windows-10-datenschutz-mit-powershell-erhoehen/">http://blog.doenselmann.com/windows-10-datenschutz-mit-powershell-erhoehen/</a></li>
+<li>More Information: <a href="https://blog.doenselmann.com/windows-10-datenschutz-mit-powershell-erhoehen/">https://blog.doenselmann.com/windows-10-datenschutz-mit-powershell-erhoehen/</a></li>
 </ul>
 <br>
 ./scripts/Windows10_Cleanup.ps1:<br>
@@ -15,7 +15,7 @@ PowerShell scripts for Windows 10:<br>
 <li>Cleanup Microsoft Temp Data</li>
 <li>Options are configurable within the script</li>
 <li>Script checks the required execution level</li>
-<li>More Information: <a href="http://blog.doenselmann.com/windows-10-mit-powershell-aufraeumen/">http://blog.doenselmann.com/windows-10-mit-powershell-aufraeumen/</a></li>
+<li>More Information: <a href="https://blog.doenselmann.com/windows-10-mit-powershell-aufraeumen/">https://blog.doenselmann.com/windows-10-mit-powershell-aufraeumen/</a></li>
 </ul>
 
 # Usage Windows10_Privacy.ps1
