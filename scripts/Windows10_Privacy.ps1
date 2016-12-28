@@ -1,7 +1,6 @@
 # Windows 10 privacy settings
 # Michi Dönselmann
-# https://blog.doenselmann.com
-# 02.11.2016
+# Last change: 28.12.2016
 
 # Execution examples:
 # Enable privacy protection: powershell.exe -ExecutionPolicy Bypass "& '.\Windows10_Privacy.ps1 ' -enable:$true"
@@ -20,12 +19,6 @@ param
 $services =  "diagtrack","dmwappushservice"
 # variable for sheduled tasks
 $tasks =  "Microsoft Compatibility Appraiser","ProgramDataUpdater","Consolidator","KernelCeipTask","UsbCeip"
-
-#--------------------------------
-#								-
-#   STOP CHANGING THINGS NOW    -
-#								-
-#--------------------------------
 
 #----------------------------------------------------------------------------------
 
@@ -94,6 +87,7 @@ if ($enable -eq "True")
 	#----------------------------------------------------------------------------------
 	# disable telemetry (also possible with GPO)
 	$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection"
+	New-Item -path $path -Force
 	Set-ItemProperty -path $path -name AllowTelemetry -value "1"
 		
 	# errorhandling
@@ -127,6 +121,17 @@ if ($enable -eq "True")
 		}
 	}
 
+	#----------------------------------------------------------------------------------
+	# disable OneDrive for file sync (also possible with GPO)
+	$path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive"
+	New-Item -path $path -Force
+	Set-ItemProperty -path $path -name DisableFileSyncNGSC -value "1"
+		
+	# errorhandling
+	if ($error.Count -gt 0)
+	{
+		errorhandling -code 5;
+	}
 }
 else
 
@@ -146,7 +151,7 @@ else
 		# errorhandling
 		if ($error.Count -gt 0)
 		{
-			errorhandling -code 5;
+			errorhandling -code 1;
 		}	
 	}
 
@@ -158,7 +163,7 @@ else
 	# errorhandling
 	if ($error.Count -gt 0)
 	{
-		errorhandling -code 6;
+		errorhandling -code 2;
 	}
 	
 	#----------------------------------------------------------------------------------
@@ -169,7 +174,7 @@ else
 	# errorhandling
 	if ($error.Count -gt 0)
 	{
-		errorhandling -code 7;
+		errorhandling -code 3;
 	}
 
 	#----------------------------------------------------------------------------------
@@ -182,7 +187,18 @@ else
 		# errorhandling
 		if ($error.Count -gt 0)
 		{
-			errorhandling -code 8;
+			errorhandling -code 4;
 		}
+	}
+	
+	#----------------------------------------------------------------------------------
+	# enable OneDrive for file sync (also possible with GPO)
+	$path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive"
+	Set-ItemProperty -path $path -name DisableFileSyncNGSC -value "0"
+		
+	# errorhandling
+	if ($error.Count -gt 0)
+	{
+		errorhandling -code 5;
 	}
 }
