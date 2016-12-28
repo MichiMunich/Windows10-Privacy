@@ -5,6 +5,8 @@ PowerShell scripts for Windows 10:<br>
 <ul>
 <li>Disable telemetry settings and stop sending data to Microsoft</li>
 <li>Disable various scheduled tasks</li>
+<li>Configure update delivery optimization</li>
+<li>Disable OneDrive for file sync</li>
 <li>Script checks the required execution level</li>
 <li>Complete rollback is possible</li>
 <li>More Information: <a href="https://blog.doenselmann.com/windows-10-datenschutz-mit-powershell-erhoehen/">https://blog.doenselmann.com/windows-10-datenschutz-mit-powershell-erhoehen/</a></li>
