@@ -92,7 +92,15 @@ if ($enable -eq "True")
 	# disable telemetry (also possible with GPO)
 	$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection"
 	New-Item -path $path -Force
-	Set-ItemProperty -path $path -name AllowTelemetry -value "1"
+	
+	if ($edition.edition -eq "Enterprise")
+        {
+                Set-ItemProperty -path $path -name AllowTelemetry -value "0"
+        }
+        else
+        {
+                Set-ItemProperty -path $path -name AllowTelemetry -value "1"
+        }
 		
 	# errorhandling
 	if ($error.Count -gt 0)
@@ -129,15 +137,7 @@ if ($enable -eq "True")
 	# disable OneDrive for file sync (also possible with GPO)
 	$path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive"
 	New-Item -path $path -Force
-	
-	if ($edition.edition -eq "Enterprise")
-	{
-		Set-ItemProperty -path $path -name AllowTelemetry -value "0"
-	}
-	else
-	{
-		Set-ItemProperty -path $path -name AllowTelemetry -value "1"
-	}
+	Set-ItemProperty -path $path -name DisableFileSyncNGSC -value "1"
 		
 	# errorhandling
 	if ($error.Count -gt 0)
