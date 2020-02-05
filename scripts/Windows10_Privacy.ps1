@@ -1,6 +1,6 @@
 # Windows 10 privacy settings
 # Michi Dönselmann
-# Last change: 28.12.2016
+# Last change: 05.02.2020
 
 # Execution examples:
 # Enable privacy protection: powershell.exe -ExecutionPolicy Bypass "& '.\Windows10_Privacy.ps1 ' -enable:$true"
@@ -18,7 +18,7 @@ param
 # variable for services
 $services =  "diagtrack","dmwappushservice"
 # variable for sheduled tasks
-$tasks =  "Microsoft Compatibility Appraiser","ProgramDataUpdater","Consolidator","KernelCeipTask","UsbCeip"
+$tasks =  "Microsoft Compatibility Appraiser","ProgramDataUpdater","Consolidator","UsbCeip","Proxy","Microsoft-Windows-DiskDiagnosticDataCollector"
 
 #----------------------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ $error.Clear();
 
 function errorhandling($message = $error[0].Exception.Message, $Code)
 {
-	# write execution Log to %tempp%
+	# write execution Log to %temp%
 	$error | out-file -PSPath $env:temp\PowerShell_Execution_Error.log -Append;
 	# on error just show content of Exeption.Message
 	$message = "Error executing section $($code): " + $($message)
@@ -50,6 +50,10 @@ else
 {
 	$arch = "x86"
 }
+
+#----------------------------------------------------------------------------------
+# get windows edition
+$edition = get-windowsedition -online -ErrorAction SilentlyContinue
 
 #----------------------------------------------------------------------------------
 # check if script runs in admin context
@@ -125,7 +129,15 @@ if ($enable -eq "True")
 	# disable OneDrive for file sync (also possible with GPO)
 	$path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive"
 	New-Item -path $path -Force
-	Set-ItemProperty -path $path -name DisableFileSyncNGSC -value "1"
+	
+	if ($edition.edition -eq "Enterprise")
+	{
+		Set-ItemProperty -path $path -name AllowTelemetry -value "0"
+	}
+	else
+	{
+		Set-ItemProperty -path $path -name AllowTelemetry -value "1"
+	}
 		
 	# errorhandling
 	if ($error.Count -gt 0)
