@@ -1,11 +1,11 @@
 # Windows cleanup script
 # Michi Dönselmann
 # https://blog.doenselmann.com
-# 05.02.2020
+# 11.06.2020
 
 # Execution examples:
-# From command prompt: powershell.exe -ExecutionPolicy Bypass "& '.\WindowsCleanup.ps1'"
-# Within powershell console: .\WindowsCleanup.ps1
+# From command prompt: powershell.exe -ExecutionPolicy Bypass "& '.\Windows10_Cleanup.ps1'"
+# Within powershell console: .\Windows10_Cleanup.ps1
 
 #----------------------------------------------------------------------------------
 # global variables. Change values here if needed
