@@ -1,6 +1,6 @@
 # Windows 10 privacy settings
 # Michi Dönselmann
-# Last change: 05.02.2020
+# Last change: 11.06.2020
 
 # Execution examples:
 # Enable privacy protection: powershell.exe -ExecutionPolicy Bypass "& '.\Windows10_Privacy.ps1 ' -enable:$true"
@@ -90,16 +90,16 @@ if ($enable -eq "True")
 
 	#----------------------------------------------------------------------------------
 	# disable telemetry (also possible with GPO)
-	$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection"
+	$path = "HKLM:\Software\Policies\Microsoft\Windows\DataCollection"
 	New-Item -path $path -Force
 	
 	if ($edition.edition -eq "Enterprise")
         {
-                Set-ItemProperty -path $path -name AllowTelemetry -value "0"
+                Set-ItemProperty -path $path -name AllowTelemetry -value "0" -type "DWord"
         }
         else
         {
-                Set-ItemProperty -path $path -name AllowTelemetry -value "1"
+                Set-ItemProperty -path $path -name AllowTelemetry -value "1" -type "DWord"
         }
 		
 	# errorhandling
@@ -110,8 +110,8 @@ if ($enable -eq "True")
 
 	#----------------------------------------------------------------------------------
 	# disable update delivery optimization (also possible with GPO)
-	$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config"
-	Set-ItemProperty -path $path -name DODownloadMode -value "0"
+	$path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization"
+	Set-ItemProperty -path $path -name DODownloadMode -value "0" -type "DWord"
 		
 	# errorhandling
 	if ($error.Count -gt 0)
@@ -169,8 +169,8 @@ else
 
 	#----------------------------------------------------------------------------------
 	# enable telemetry (also possible with GPO)
-	$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection"
-	Set-ItemProperty -path $path -name AllowTelemetry -value "2"
+	$path = "HKLM:\Software\Policies\Microsoft\Windows\DataCollection"
+	Remove-ItemProperty -path $path -name AllowTelemetry
 			
 	# errorhandling
 	if ($error.Count -gt 0)
@@ -180,8 +180,8 @@ else
 	
 	#----------------------------------------------------------------------------------
 	# enable update delivery optimization (also possible with GPO)
-	$path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config"
-	Set-ItemProperty -path $path -name DODownloadMode -value "1"
+	$path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization"
+	Remove-ItemProperty -path $path -name DODownloadMode
 		
 	# errorhandling
 	if ($error.Count -gt 0)
@@ -206,7 +206,7 @@ else
 	#----------------------------------------------------------------------------------
 	# enable OneDrive for file sync (also possible with GPO)
 	$path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive"
-	Set-ItemProperty -path $path -name DisableFileSyncNGSC -value "0"
+	Remove-ItemProperty -path $path -name DisableFileSyncNGSC
 		
 	# errorhandling
 	if ($error.Count -gt 0)
