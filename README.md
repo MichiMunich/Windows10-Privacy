@@ -27,5 +27,5 @@ Disable privacy protection:<br>
 powershell.exe -ExecutionPolicy Bypass "& '.\Windows10_Privacy.ps1 ' -enable:$false"<br>
 
 # Usage Windows10_Cleanup.ps1
-powershell.exe -NoProfile -ExecutionPolicy Bypass "& '.\WindowsCleanup.ps1'"<br>
+powershell.exe -NoProfile -ExecutionPolicy Bypass "& '.\Windows10_Cleanup.ps1'"<br>
 Alternatively execute the batch File "Windows10_Cleanup.cmd" by doubleclick<br>
